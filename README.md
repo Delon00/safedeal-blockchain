@@ -67,7 +67,7 @@ Cela va créer 20 faux comptes avec 10 000 ETH chacun
 Ouvre un DEUXIÈME terminal et déploie ton contrat sur ce nœud local :
 
 ```Bash
-npx hardhat ignition deploy ignition/modules/SafeDeal.js --network localhost
+npx hardhat ignition deploy ignition/modules/SafeDeal.ts --network localhost
 ```
 Déploiement sur Sepolia (Testnet)
 Configurez votre clé privée :

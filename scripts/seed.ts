@@ -1,7 +1,6 @@
 import hre from "hardhat";
 
 async function main() {
-  // --- 1. La méthode qui marche chez toi pour récupérer ethers ---
   const connection = await hre.network.connect();
   const ethers = connection.ethers;
 
@@ -26,8 +25,7 @@ async function main() {
 
   await tx.wait();
 
-  console.log("✅ Article créé ! ID: 0");
-  console.log("🚀 Tu peux maintenant tester ton API NestJS.");
+  console.log(" Article créé ! ID: 0");
 }
 
 main().catch((error) => {
