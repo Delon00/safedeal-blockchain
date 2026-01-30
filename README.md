@@ -1,57 +1,97 @@
-# Sample Hardhat 3 Beta Project (`mocha` and `ethers`)
+# 🛡️ SafeDeal - Place de Marché Décentralisée (DApp)
 
-This project showcases a Hardhat 3 Beta project using `mocha` for tests and the `ethers` library for Ethereum interactions.
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+![Solidity](https://img.shields.io/badge/Solidity-%5E0.8.20-363636.svg)
+![Hardhat](https://img.shields.io/badge/Hardhat-v3_Beta-yellow.svg)
 
-## Project Overview
+> **Projet 5BLOC** : Développement d'une DApp de séquestre (Escrow) sur Ethereum.
 
-This example project includes:
+## 📖 À propos
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using `mocha` and ethers.js
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+**SafeDeal** est une application décentralisée (DApp) qui sécurise les échanges d'objets de seconde main entre particuliers. Elle remplace les tiers de confiance traditionnels par un Smart Contract autonome qui séquestre les fonds jusqu'à la validation de la réception.
 
-## Usage
+[cite_start]Ce projet a été réalisé dans le cadre de l'examen 5BLOC [cite: 2, 3] et respecte l'intégralité du cahier des charges technique.
 
-### Running Tests
+## ✨ Fonctionnalités & Règles Métiers
 
-To run all the tests in the project, execute the following command:
+Le contrat intelligent intègre les contraintes suivantes pour garantir la sécurité et l'équité :
 
-```shell
+* [cite_start]**📦 Tokenisation** : Chaque objet est un NFT (ERC721) unique lié à des métadonnées IPFS[cite: 18, 29].
+* [cite_start]**⛔ Limite de Possession** : Un utilisateur ne peut pas détenir plus de **4 annonces** actives simultanément[cite: 24].
+* [cite_start]**⏳ Anti-Spam (Cooldown)** : Un délai de **5 minutes** est imposé entre deux actions critiques pour éviter les abus[cite: 26].
+* **🔒 Séquestre (Escrow)** : Les fonds sont bloqués lors de l'achat.
+* [cite_start]**🛡️ Verrouillage (TimeLock)** : Une période de sûreté de **10 minutes** est imposée après l'achat avant de pouvoir valider la réception[cite: 27].
+
+## 🛠️ Stack Technique
+
+* **Blockchain** : Ethereum (EVM)
+* **Langage** : Solidity `0.8.20`
+* **Framework** : Hardhat 3 (Beta)
+* **Tests** : Ethers.js v6 & Chai
+
+## 🚀 Installation
+
+### 1. Prérequis
+* [Node.js](https://nodejs.org/) (v18+)
+* [Git](https://git-scm.com/)
+
+### 2. Cloner le projet
+```bash
+git clone <URL_DU_REPO>
+cd SafeDeal
+npm install
+```
+### 3.🧪 Tests Unitaires 
+Ce projet contient une suite de tests complète validant tous les scénarios nominaux et les contraintes métiers (Happy Path & Fail Cases).
+
+Pour lancer les tests :
+
+```Bash
+npx hardhat compile
+```
+```Bash
 npx hardhat test
 ```
+Note : Les tests utilisent ethers.js v6 et une configuration Hardhat standard sans Ignition pour assurer la compatibilité et la rapidité d'exécution.
 
-You can also selectively run the Solidity or `mocha` tests:
+### 4.📦 Déploiement
+Le déploiement est géré via Hardhat Ignition.
 
-```shell
-npx hardhat test solidity
-npx hardhat test mocha
+Déploiement Local
+Pour tester sur un nœud local éphémère :
+
+```Bash
+npx hardhat node
 ```
+Cela va créer 20 faux comptes avec 10 000 ETH chacun
+Ouvre un DEUXIÈME terminal et déploie ton contrat sur ce nœud local :
 
-### Make a deployment to Sepolia
-
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
+```Bash
+npx hardhat ignition deploy ignition/modules/SafeDeal.js --network localhost
 ```
+Déploiement sur Sepolia (Testnet)
+Configurez votre clé privée :
 
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
-
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
+```Bash
 npx hardhat keystore set SEPOLIA_PRIVATE_KEY
 ```
+Déployez :
 
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
+```Bash
+npx hardhat ignition deploy --network sepolia ignition/modules/SafeDeal.js
 ```
+### 5.📂 Structure du Projet
+```Plaintext
+SafeDeal/
+├── contracts/
+│   └── SafeDeal.sol       # Smart Contract (Logique Métier)
+├── test/
+│   └── SafeDeal.js        # Tests Unitaires
+├── ignition/
+│   └── modules/
+│       └── SafeDeal.js    # Script de déploiement
+├── hardhat.config.ts      # Configuration
+└── README.md              # Documentation
+```
+### 👥 Auteurs
+Jean-Philippe Delon
